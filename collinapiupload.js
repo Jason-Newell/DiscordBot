@@ -57,13 +57,24 @@ function updateProductList(data) {
 
 function sendBotMsg() {
   console.log("Notifying bot");
+  const grStoreUrl = procuess.env.grStoreUrl;
   const dcWhId = process.env.dcWhId;
   // Disc Bot
   const dcWhToken = process.env.dcWhToken;
   // Disc Bot
-  let url = `https://discord.com/api/webhooks/${dcWhId}/${dcWhToken}`;
+  const msg = `There's a new product!\nMore info at:${grStoreUrl}`;
+  const url = `https://discord.com/api/webhooks/${dcWhId}/${dcWhToken}`;
+  const opt = {
+    hostname: url,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': data.length,
+    },
+    content: msg
+  }
 
-  const request = https.request(url, (response) => {
+  const request = https.request(opt, (response) => {
     let data = "";
     response.on("data", (chunk) => {
       data = data + chunk.toString();
