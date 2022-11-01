@@ -82,5 +82,5 @@ function sendBotMsg() {
   request.end();
 }
 
-const interval = 216000;  // every 60 mins
+const interval = 10000; //216000;  // every 60 mins
 setInterval(ckGr, interval);
