@@ -52,26 +52,30 @@ function ckGr() {
 }
 
 function updateProductList(data) {
-  process.env.currentProductIds = date;
+  process.env.currentProductIds = data;
 }
 
 function sendBotMsg() {
   console.log("Notifying bot");
-  const grStoreUrl = procuess.env.grStoreUrl;
+  const grStoreUrl = process.env.grStoreUrl;
   const dcWhId = process.env.dcWhId;
   // Disc Bot
   const dcWhToken = process.env.dcWhToken;
   // Disc Bot
-  const msg = `There's a new product!\nMore info at:${grStoreUrl}`;
-  const url = `https://discord.com/api/webhooks/${dcWhId}/${dcWhToken}`;
+  const msg = JSON.stringify({
+    'content': `There's a new product!\nMore info at:${grStoreUrl}`
+  });
+
+  const host = "discord.com";
+  const dcPath = `/api/webhooks/${dcWhId}/${dcWhToken}`;
   const opt = {
-    hostname: url,
+    hostname: host,
     method: 'POST',
+    path: dcPath,
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': data.length,
-    },
-    content: msg
+      'Content-Length': msg.length
+    }
   }
 
   const request = https.request(opt, (response) => {
@@ -79,17 +83,13 @@ function sendBotMsg() {
     response.on("data", (chunk) => {
       data = data + chunk.toString();
     });
-
-    response.on("end", () => {
-      const body = JSON.parse(data);
-      console.log(body);
-    });
   });
 
   request.on("error", (error) => {
     console.log("An error", error);
   });
 
+  request.write(msg);
   request.end();
 }
 
