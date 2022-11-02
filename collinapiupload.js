@@ -63,7 +63,7 @@ function sendBotMsg() {
   const dcWhToken = process.env.dcWhToken;
   // Disc Bot
   const msg = JSON.stringify({
-    'content': `There's a new product!\nMore info at:${grStoreUrl}`
+    'content': `There's a new product!\nMore info at:${grStoreUrl}\n(Message from Heroku)`
   });
 
   const host = "discord.com";
