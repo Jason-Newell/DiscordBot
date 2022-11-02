@@ -6,7 +6,7 @@ function ckGr() {
   // GR App
   const url = `https://api.gumroad.com/v2/products?access_token=${grToken}`;
   //GR App
-  const lastProductIds = process.env.lastProductIds;
+  const lastProductIds = JSON.parse(process.env.lastProductIds);
   let currentProductIds = [];
   let productsUpdated = false;
 
