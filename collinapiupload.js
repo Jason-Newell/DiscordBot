@@ -52,7 +52,7 @@ function ckGr() {
 }
 
 function updateProductList(data) {
-  process.env.currentProductIds = data;
+  process.env.lastProductIds = data;
 }
 
 function sendBotMsg() {
